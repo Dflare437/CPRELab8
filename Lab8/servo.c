@@ -24,15 +24,24 @@ void servo_init()
     TIMER1_TBMR_R |= 0xA; //configure PWM for the timer
     TIMER1_CTL_R &= ~0x40; //make non-inverting
 
-    //TIMER1_TBPR_R //Set 8-bit prescaler
-    //TIMER1_TBILR_R //Set the start value
-    //TIMER1_TBMATCHR_R //Set TnEn bit to enable timer and start counting
-
-    TIMER1_CTL_R |= 0x100; //Start the timer
+    TIMER1_TBPR_R &= ~0xFF; //Set 8-bit prescaler
+    TIMER1_TBPR_R |= 0x4;
+    TIMER1_TBILR_R &= ~0xFFFF; //Set the start value
+    TIMER1_TBILR_R |= 0xE200;
 }
 
 int servo_move(float degrees)
 {
-    return 0;
+    float high_time = ((degrees / 180) * 0.001) + 0.001;
+
+    int low_time = 0.02 - high_time;
+
+    int match_val = low_time * 16000000;
+
+    //TIMER1_TBMATCHR_R //Set match value
+
+    TIMER1_CTL_R |= 0x100; //Start the timer
+
+    return match_val;
 }
 
