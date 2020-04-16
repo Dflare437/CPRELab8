@@ -17,5 +17,4 @@ void servo_init(void);
 //make the servo move n degrees
 int servo_move(float degrees);
 
-
 #endif /* SERVO_H_ */

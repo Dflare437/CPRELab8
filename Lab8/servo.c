@@ -33,15 +33,16 @@ void servo_init()
 int servo_move(float degrees)
 {
     float high_time = ((degrees / 180) * 0.001) + 0.001;
-
     int low_time = 0.02 - high_time;
-
     int match_val = low_time * 16000000;
 
-    //TIMER1_TBMATCHR_R //Set match value
+    TIMER1_TBPMR_R &= ~0xFF;
+    //TIMER1_TBPMR_R //Set prescale match val
+
+    TIMER1_TBMATCHR_R &= ~0xFFFF;
+    //TIMER1_TBMATCHR_R //Set match val
 
     TIMER1_CTL_R |= 0x100; //Start the timer
 
-    return match_val;
+    return high_time;
 }
-

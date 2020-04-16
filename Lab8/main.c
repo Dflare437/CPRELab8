@@ -1,5 +1,3 @@
-
-
 /**
  * main.c
  */
@@ -14,7 +12,7 @@
 int main(void)
 {
     timer_init();
-	servo_init();
+    servo_init();
 
-	printf("%d", servo_move(30));
+    printf("%d", servo_move(30));
 }
